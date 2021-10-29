@@ -30,6 +30,7 @@ function maxOnesAfterRemoveItem(array $line): int
     $currenZeroCount = 0;
     $currentUnitCount = 0;
     $itemFlag = true;
+    $oneItemFlag = true;
     $lineCount = count($line);
 
     if ($lineCount <= 1) {
@@ -55,7 +56,7 @@ function maxOnesAfterRemoveItem(array $line): int
                 $currentCount = (0 === $currentUnitCount) ? 0 : $currentCount;
                 $currentCount = (isset($line[$i - 1]) && $line[$i - 1] === 0 && $currentCount > 2) ? --$currentCount : $currentCount;
 
-            } elseif($currentUnitCount !== 1) {
+            } elseif($currentUnitCount !== 1 && $oneItemFlag) {
                 --$currentCount;
             }
 
@@ -69,7 +70,7 @@ function maxOnesAfterRemoveItem(array $line): int
 
             $currenZeroCount = 0;
             $currentUnitCount = 0;
-            $itemFlag = false;
+            $itemFlag = $oneItemFlag = false;
             $currentCount = 0;
         }
 
@@ -102,5 +103,6 @@ assert(maxOnesAfterRemoveItem([1, 0, 0, 0, 0, 0, 0, 0]) === 1, RuntimeException:
 assert(maxOnesAfterRemoveItem([1, 1, 1, 1, 1, 1, 1, 1]) === 7, RuntimeException::class);
 assert(maxOnesAfterRemoveItem([1, 1, 1, 1]) === 3, RuntimeException::class);
 assert(maxOnesAfterRemoveItem([1, 1, 1]) === 2, RuntimeException::class);
+assert(maxOnesAfterRemoveItem([1, 0, 0, 1, 1]) === 2, RuntimeException::class);
 
 
